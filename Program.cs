@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace PhoneBook_DataBinding
@@ -17,7 +15,7 @@ namespace PhoneBook_DataBinding
     {
         public void ProcessData(IDataProvider dataProvider)
         {
-            Console.WriteLine(dataProvider.GetData());   
+            Console.WriteLine(dataProvider.GetData());
         }
     }
     class DbDataProvider : IDataProvider
@@ -55,9 +53,46 @@ namespace PhoneBook_DataBinding
             dataProcessor.ProcessData(new FileDataProvider());
             dataProcessor.ProcessData(new APIDataProvider());
 
+            PhoneBook[] phoneBookDataBase = new PhoneBook[]
+            {
+                    new Credentials ( "Колян", "Петров", "Иванович",true,new DateTime(1945,10,6) ),
+                    new Credentials ("Васян", "Дачев","Бедросович",false, new DateTime(1967,12,12)),
+                    new Address ("Ленина", "10","5"),
+                    new Address ("Гаражная", "2","105"),
+                    new PhoneInfo("4096583",false),
+                    new PhoneInfo("0679146592",true)
+            };
+
+            foreach (PhoneBook phoneBook in phoneBookDataBase)
+            {
+                phoneBook.PrintInfo();
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            DateTime askDate = new DateTime(2014, 3, 8);
+            int foundClients = 0;
+
+            foreach (PhoneBook phoneBook in phoneBookDataBase)
+            {
+                if (phoneBook.IsClientByDate(askDate))
+                {
+                    phoneBook.PrintInfo();
+                    foundClients++;
+                    Console.WriteLine();
+                }
+            }
+            if (foundClients == 0)
+            {
+                Console.WriteLine("Клиенты по данной дате не найдены");
+            }
+            //Console.ReadLine();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form4());
         }
     }
 }
+

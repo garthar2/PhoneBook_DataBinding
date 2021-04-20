@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PhoneBook_DataBinding
 {
@@ -36,9 +33,19 @@ namespace PhoneBook_DataBinding
 
 
     }
-    public class Credentials 
+
+
+
+    public abstract class PhoneBook
     {
-        public Credentials(string firstName, string lastName, string middleName, bool gender, int yearOfBirth)
+
+        public abstract void PrintInfo();
+        public abstract bool IsClientByDate(DateTime date);
+    }
+
+    public class Credentials : PhoneBook
+    {
+        public Credentials(string firstName, string lastName, string middleName, bool gender, DateTime yearOfBirth)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -51,45 +58,79 @@ namespace PhoneBook_DataBinding
         public string LastName { get; set; }
         public string MiddleName { get; set; }
         public bool Gender { get; set; }
-        public int YearOfBirth { get; set; }
+        public DateTime YearOfBirth { get; set; }
+
+
+
+        public override void PrintInfo()
+        {
+            Console.WriteLine("Фамилия: {0}", LastName);
+            Console.WriteLine("Имя: {0}", FirstName);
+            Console.WriteLine("Отчество: {0}", MiddleName);
+            Console.WriteLine("Дата рождения: {0}", YearOfBirth.ToShortDateString());
+            Console.WriteLine("Муж?: {0}", Gender);
+        }
+
+        public override bool IsClientByDate(DateTime date)
+        {
+            if (YearOfBirth == date)
+                return true;
+            return false;
+        }
     }
-    public class Address : Credentials
+
+    public class Address : PhoneBook
     {
-        public Address(string firstName, string lastName, string middleName, bool gender, int yearOfBirth, string streetName, string buildNum,
-            string flatNum):base(firstName,  lastName,  middleName, gender, yearOfBirth)
+        public string StreetName { get; set; }
+        public string BuildNum { get; set; }
+        public string FlatNum { get; set; }
+
+        public Address(string streetName, string buildNum, string flatNum)
         {
             StreetName = streetName;
             BuildNum = buildNum;
             FlatNum = flatNum;
         }
 
-        public string StreetName { get; set; }
-        public string BuildNum { get; set; }
-        public string FlatNum  { get; set; }
+        public override void PrintInfo()
+        {
+            Console.WriteLine("Улица: {0}", StreetName);
+            Console.WriteLine("Номер дома: {0}", BuildNum);
+            Console.WriteLine("Номер квартиры: {0}", FlatNum);
+        }
+
+        public override bool IsClientByDate(DateTime date)
+        {
+            /*    if (CreditDate == date)
+                    return true;*/
+            return false;
+        }
     }
-    public class Phone : Address
+
+    public class PhoneInfo : PhoneBook
     {
-        public Phone(string firstName, string lastName, string middleName, bool gender, int yearOfBirth, string streetName, string buildNum,
-            string flatNum, string phoneNum, bool isMobile) : base (firstName, lastName, middleName, gender, yearOfBirth, streetName,buildNum,flatNum)
+        public PhoneInfo(string phoneNum, bool isMobile)
         {
             PhoneNum = phoneNum;
-            this.IsMobile = isMobile;
+            IsMobile = isMobile;
         }
 
         public string PhoneNum { get; set; }
         public bool IsMobile { get; set; }
-    }
-    public class PhoneBook :Phone
-    {
-        public PhoneBook(string email, string firstName, string lastName, string middleName, bool gender, int yearOfBirth, string streetName, string buildNum,
-            string flatNum, string phoneNum, bool isMobile)
-            :base (firstName, lastName, middleName, gender, yearOfBirth, streetName, buildNum, flatNum, phoneNum, isMobile)
+
+        public override void PrintInfo()
         {
-            Email = email;
+            Console.WriteLine("Телефон: {0}", PhoneNum);
+            Console.WriteLine("Мобильный?: {0}", IsMobile);
         }
 
-        public string Email { get; set; }
+        public override bool IsClientByDate(DateTime date)
+        {
+            // if (AccountDate == date)
+            //    return true;
+            return false;
+        }
     }
 
-    
 }
+

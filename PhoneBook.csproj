@@ -92,10 +92,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Properties\DataSources\Animal.datasource" />
-    <None Include="Properties\DataSources\Form1.datasource" />
-    <None Include="Properties\DataSources\Form4.datasource" />
-    <None Include="Properties\DataSources\People.datasource" />
+    <None Include="Properties\DataSources\Credentials.datasource" />
+    <None Include="Properties\DataSources\PhoneBook.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -109,5 +107,6 @@
   <ItemGroup>
     <Content Include="PhoneBookData.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
